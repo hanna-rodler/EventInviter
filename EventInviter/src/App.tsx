@@ -1,18 +1,25 @@
-import { useState } from 'react'
-import './App.css'
-import Button from '@mui/material/Button';
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { EventsPage } from './pages/EventsPage';
+import { ContactsPage } from "./pages/ContactsPage";
+import { EventDetailPage } from "./pages/EventDetailPage";
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-        <h1>Welcome to Event Inviter</h1>
-        <p>Enjoy coding</p>
-        <Button onClick={() => setCount((count) => count + 1)} variant="contained">
-            Count is {count}
-        </Button>
-    </>
+      <>
+          <BrowserRouter>
+              <menu>
+                  <Link to="/">Events</Link>
+                  <Link to="/contacts">Contacts</Link>
+              </menu>
+              <Routes>
+                  <Route path="/" element={<EventsPage />} />
+                  <Route path="/contacts" element={<ContactsPage />} />
+                  <Route path="/events/:id" element={<EventDetailPage />} />
+              </Routes>
+          </BrowserRouter>
+      </>
   )
 }
 
