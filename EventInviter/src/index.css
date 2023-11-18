@@ -36,6 +36,9 @@ a {
   margin: 0 10px;
 }
 
+a.active {
+  text-decoration: underline;
+}
 
 h1 {
   font-size: 3.2em;
