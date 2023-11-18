@@ -18,6 +18,9 @@ function App() {
                       <Button color="inherit" component={NavLink} to="/contacts">
                           Contacts
                       </Button>
+                      <Button color="inherit" component={NavLink} to="/events/1">
+                          Events Detail
+                      </Button>
                   </Toolbar>
               </AppBar>
               <Container>
