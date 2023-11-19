@@ -1,3 +1,5 @@
+import {Contact} from "./contact";
+
 export type Event = {
     id: number;
     name: string;
@@ -6,4 +8,5 @@ export type Event = {
     location: string;
     description: string;
     isInvitesSent: boolean;
+    invitees: Contact[];
 }
