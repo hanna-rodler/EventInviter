@@ -9,6 +9,7 @@ type ContactCardProps = {
   lastName: string;
   showTelNumber?: boolean;
   telNumber: string;
+  onClick?: () => void;
 };
 
 export const ContactCard = ({
@@ -16,9 +17,10 @@ export const ContactCard = ({
   lastName,
   showTelNumber,
   telNumber,
+  onClick,
 }: ContactCardProps) => {
   return (
-    <Paper elevation={4} style={{ padding: 16 }}>
+    <Paper elevation={4} style={{ padding: 16 }} onClick={onClick}>
       <Grid
         container
         justifyContent="space-between"

@@ -4,6 +4,9 @@ import { Contact } from "../types/contact";
 import Stack from "@mui/material/Stack";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { SearchBar } from "../components/SearchBar";
+import Modal from "@mui/material/Modal";
+import CreateContactForm from "../components/CreateContactForm";
+import Typography from "@mui/material/Typography";
 
 const CONTACTS: Contact[] = [
   {
@@ -57,6 +60,33 @@ type ContactsPageProps = {
 export const ContactsPage = ({ contacts }: ContactsPageProps) => {
   contacts = CONTACTS;
   const [filteredContacts, setFilteredContacts] = useState(contacts);
+  const [currentContact, setCurrentContact] = useState<Contact>({
+    id: 0,
+    firstName: "",
+    lastName: "",
+    telNumber: "",
+    email: "",
+  });
+
+  const handleContactCardClick = (clickedContact: Contact) => {
+    setCurrentContact(clickedContact);
+  };
+
+  const [openModal, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+    const emptyContact: Contact = {
+      id: 0,
+      firstName: "",
+      lastName: "",
+      telNumber: "",
+      email: "",
+    };
+    setCurrentContact(emptyContact);
+    console.log("in handle open");
+  };
+
+  const handleClose = () => setOpen(false);
 
   const handleSearch = (searchTerm: string) => {
     const filtered = contacts.filter(
@@ -72,14 +102,32 @@ export const ContactsPage = ({ contacts }: ContactsPageProps) => {
   return (
     <Fragment>
       <div style={{ padding: 16 }}>
-        <Stack direction="row" gap={1} paddingBottom={2}>
-          <AddCircleIcon></AddCircleIcon>
-          <label>Create Contact</label>
+        <Stack direction="row" gap={1} paddingBottom={2} alignItems={"center"}>
+          <AddCircleIcon
+            sx={{ cursor: "pointer" }}
+            onClick={handleOpen}
+          ></AddCircleIcon>
+          <Typography
+            sx={{ cursor: "pointer" }}
+            style={{ background: "none", borderWidth: "1px" }}
+            onClick={handleOpen}
+          >
+            Create Contact
+          </Typography>
         </Stack>
+
+        <Modal
+          open={openModal}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <CreateContactForm contact={currentContact} onClose={handleClose} />
+        </Modal>
 
         <SearchBar onSearch={handleSearch} />
 
-        <Stack direction="column" gap={1}>
+        <Stack direction="column" gap={1} flexWrap={"wrap"}>
           {filteredContacts.map((contact) => (
             <ContactCard
               key={contact.id}
@@ -87,6 +135,7 @@ export const ContactsPage = ({ contacts }: ContactsPageProps) => {
               lastName={contact.lastName}
               showTelNumber={true}
               telNumber={contact.telNumber}
+              onClick={() => handleContactCardClick(contact)}
             />
           ))}
         </Stack>

@@ -20,8 +20,8 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
     <Stack direction={"row"} alignItems={"center"} gap={1} paddingBottom={2}>
       <SearchIcon></SearchIcon>
       <TextField
-        label="Search"
         variant="outlined"
+        size="small"
         fullWidth
         value={searchTerm}
         onChange={handleSearchChange}
