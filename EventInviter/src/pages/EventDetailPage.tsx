@@ -7,6 +7,7 @@ import {Event} from '../types/events'
 import { ContactCard } from "../components/ContactCard";
 import {Fragment, useEffect, useState} from "react";
 import {Contact} from "../types/contact";
+import {useDrag, useDrop} from "react-dnd";
 
 const EVENTS: Event[] = [
     {
@@ -99,6 +100,30 @@ const CONTACTS: Contact[] = [
     },
 ];
 
+const DraggableCard = ({ contact }) => {
+    const [{ isDragging }, drag] = useDrag({
+        type: 'CONTACT',
+        item: { contact },
+    });
+
+
+
+    return (
+        <div ref={(node) => drag(node)} style={{ opacity: isDragging ? 0.5 : 1 }}>
+            <ContactCard
+                key={contact.id}
+                firstName={contact.firstName}
+                lastName={contact.lastName}
+                draggable={true}
+                showTelNumber={false}
+                showEdit={false}
+                showDelete={false}
+            />
+        </div>
+    );
+};
+
+
 type Props = {
     events: Event[];
 };
@@ -106,6 +131,7 @@ type Props = {
 export const EventDetailPage = ({ events }: Props) => {
     events = EVENTS;
     let contacts = CONTACTS;
+
 
     const { id }: { id: string } = useParams();
     const [event, setEvent] = useState(events);
@@ -119,9 +145,41 @@ export const EventDetailPage = ({ events }: Props) => {
 
     }, [id]);
 
-    return (
-        <Fragment>
+    const handleDrop = (droppedContact) => {
+        const isContactAlreadyAdded = event[0].invitees.some(invitee => invitee.id === droppedContact.id);
 
+        if (!isContactAlreadyAdded) {
+            const updatedEvent = {
+                ...event[0],
+                invitees: [...event[0].invitees, droppedContact],
+            };
+
+            setEvent([updatedEvent]);
+        } else {
+           alert(`Contact with ID ${droppedContact.id} is already added to the event.`);
+        }
+    };
+
+    const handleDelete = (contactId) => {
+        const updatedEvent = {
+            ...event[0],
+            invitees: event[0].invitees.filter((invitee) => invitee.id !== contactId),
+        };
+
+        setEvent([updatedEvent]);
+    };
+
+    const [{ isOver }, drop] = useDrop({
+        accept: 'CONTACT',
+        drop: (item) => handleDrop(item.contact),
+        collect: (monitor) => ({
+            isOver: !!monitor.isOver(),
+        }),
+    });
+
+    return (
+
+        <Fragment>
             <Grid mt={3} container spacing={2}>
 
                 <Grid item xs={isInvitesSent ? 12 : 7}>
@@ -148,14 +206,18 @@ export const EventDetailPage = ({ events }: Props) => {
                                 showEdit={false}
                                 showDelete={true}
                                 draggable={true}
+                                onDelete={() => handleDelete(invitee.id)}
                             />
                         ))}
                     </Stack>
 
-                    <Box sx={{
-                            borderStyle: 'dashed',
-                            borderRadius: 1,
-                            width: 'fit-content',
+                    <Box ref={drop} sx={{
+                        borderStyle: 'dashed',
+                        borderRadius: 1,
+                        width: 'fit-content',
+                        borderColor: isOver ? 'green' : 'gray',
+                        backgroundColor: isOver && 'green',
+                        color: isOver && 'white',
                             '& > :not(style)': {
                                 m: 1,
                                 p: 2,
@@ -173,19 +235,12 @@ export const EventDetailPage = ({ events }: Props) => {
 
                 {!isInvitesSent && (
                     <Grid item xs={5}>
-                        <Stack gap={1} sx={{
-                                borderLeft: "2px solid",
-                                height: '100%',
-                                padding: 2,}}>
-                            {contacts.map(contact => (
-                                <ContactCard
+                        <Stack gap={1} sx={{ borderLeft: '2px solid', height: '100%', padding: 2 }}>
+                            {contacts.map((contact) => (
+                                <DraggableCard
                                     key={contact.id}
-                                    firstName={contact.firstName}
-                                    lastName={contact.lastName}
-                                    draggable={true}
-                                    showTelNumber={false}
-                                    showEdit={false}
-                                    showDelete={false}
+                                    contact={contact}
+                                    onDrop={handleDrop}
                                 />
                             ))}
                         </Stack>
@@ -195,6 +250,7 @@ export const EventDetailPage = ({ events }: Props) => {
             </Grid>
 
         </Fragment>
+
 
     )
 }
