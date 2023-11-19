@@ -1,12 +1,10 @@
-import { EventsPage } from "./pages/EventsPage";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
+import { EventsPage } from "./pages/EventsPage";
 import { AppBar, Button, Container, Toolbar } from "@mui/material";
 import { ContactsPage } from "./pages/ContactsPage";
 import { EventDetailPage } from "./pages/EventDetailPage";
 
-
 function App() {
-
   return (
       <>
           <BrowserRouter>
@@ -26,7 +24,7 @@ function App() {
               <Container>
                   <Routes>
                       <Route path="/" element={<EventsPage />} />
-                      <Route path="/contacts" element={<ContactsPage />} />
+                      <Route path="/contacts" element={<ContactsPage contacts={[]} />} />
                       <Route path="/events/:id" element={<EventDetailPage />} />
                   </Routes>
               </Container>
