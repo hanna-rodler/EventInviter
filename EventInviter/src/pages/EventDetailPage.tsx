@@ -6,6 +6,7 @@ import {Box, Grid, Stack} from "@mui/material";
 import {Event} from '../types/events'
 import { ContactCard } from "../components/ContactCard";
 import {Fragment, useEffect, useState} from "react";
+import {Contact} from "../types/contact";
 
 const EVENTS: Event[] = [
     {
@@ -53,12 +54,59 @@ const EVENTS: Event[] = [
     }
 ]
 
+const CONTACTS: Contact[] = [
+    {
+        id: 1,
+        firstName: "Hanna",
+        lastName: "Rodler",
+        telNumber: "+43 677 62675165",
+        email: "hannah@example.com",
+    },
+    {
+        id: 2,
+        firstName: "Tobias",
+        lastName: "Kothbauer",
+        telNumber: "+43 650 2109448",
+        email: "tobias@example.com",
+    },
+    {
+        id: 3,
+        firstName: "Elena",
+        lastName: "Ebetshuber",
+        telNumber: "+43 664 88440326",
+        email: "elena@example.com",
+    },
+    {
+        id: 4,
+        firstName: "Max",
+        lastName: "Mustermann",
+        telNumber: "+43 664 12345678",
+        email: "max@example.com",
+    },
+    {
+        id: 5,
+        firstName: "Maria",
+        lastName: "Musterfrau",
+        telNumber: "+43 664 87654321",
+        email: "maria@example.com",
+    },
+    {
+        id: 6,
+        firstName: "John",
+        lastName: "Doe",
+        telNumber: "+43 664 12345678",
+        email: "john@example.com",
+    },
+];
+
 type Props = {
     events: Event[];
 };
 
 export const EventDetailPage = ({ events }: Props) => {
     events = EVENTS;
+    let contacts = CONTACTS;
+
     const { id }: { id: string } = useParams();
     const [event, setEvent] = useState(events);
     const isInvitesSent = event[0]?.isInvitesSent || false;
@@ -125,13 +173,22 @@ export const EventDetailPage = ({ events }: Props) => {
 
                 {!isInvitesSent && (
                     <Grid item xs={5}>
-                        <Box sx={{
+                        <Stack gap={1} sx={{
                                 borderLeft: "2px solid",
                                 height: '100%',
-                                padding: 2,
-                            }}>
-                            <p>Here comes the component SearchBar + loading all contacts </p>
-                        </Box>
+                                padding: 2,}}>
+                            {contacts.map(contact => (
+                                <ContactCard
+                                    key={contact.id}
+                                    firstName={contact.firstName}
+                                    lastName={contact.lastName}
+                                    draggable={true}
+                                    showTelNumber={false}
+                                    showEdit={false}
+                                    showDelete={false}
+                                />
+                            ))}
+                        </Stack>
                     </Grid>
                 )}
 
