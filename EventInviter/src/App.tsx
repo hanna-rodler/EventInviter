@@ -1,3 +1,5 @@
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { EventsPage } from "./pages/EventsPage";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import { AppBar, Button, Container, Toolbar } from "@mui/material";
 import { EventsPage } from './pages/EventsPage';
@@ -35,4 +37,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
