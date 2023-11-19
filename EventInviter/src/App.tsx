@@ -1,8 +1,6 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { EventsPage } from "./pages/EventsPage";
 import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
 import { AppBar, Button, Container, Toolbar } from "@mui/material";
-import { EventsPage } from './pages/EventsPage';
 import { ContactsPage } from "./pages/ContactsPage";
 import { EventDetailPage } from "./pages/EventDetailPage";
 
