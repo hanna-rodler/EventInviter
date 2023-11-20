@@ -11,12 +11,11 @@ type ContactCardProps = {
   showTelNumber?: boolean;
   telNumber: string;
   onEdit?: () => void;
-  telNumber?: string;
   onClick?: () => void;
+  onDelete?: () => void;
   showEdit?: boolean;
   showDelete?: boolean;
   draggable?: boolean;
-  onDelete?: () => void;
 };
 
 export const ContactCard = ({
@@ -25,24 +24,23 @@ export const ContactCard = ({
   showTelNumber,
   telNumber,
   onEdit,
-  onDelete,
   onClick,
+  onDelete,
   showEdit,
   showDelete,
   draggable,
-  onDelete
 }: ContactCardProps) => {
-
   const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
     console.log(event.dataTransfer.getData("text/plain"));
   };
 
   return (
-    <Paper elevation={4}
-           style={{ padding: 16, cursor: draggable ? "move" : "default" }}
-           onClick={onClick}
-           draggable={draggable}
-           onDragStart={handleDragStart}
+    <Paper
+      elevation={4}
+      style={{ padding: 16, cursor: draggable ? "move" : "default" }}
+      onClick={onClick}
+      draggable={draggable}
+      onDragStart={handleDragStart}
     >
       <Grid
         container
@@ -52,7 +50,7 @@ export const ContactCard = ({
       >
         <Grid item>
           <Stack direction="column" spacing={1}>
-            <label style={{cursor: draggable ? "move" : "default"}}>
+            <label style={{ cursor: draggable ? "move" : "default" }}>
               {firstName} {lastName}
             </label>
             {showTelNumber && <label>{telNumber}</label>}
@@ -61,24 +59,19 @@ export const ContactCard = ({
 
         <Grid item>
           <Stack direction="row" spacing={1}>
-            <EditIcon
-              style={{ marginRight: 8 }}
-              onClick={onEdit}
-              sx={{ cursor: "pointer" }}
-            />
-            <DeleteIcon onClick={onDelete} sx={{ cursor: "pointer" }} />
+            {showEdit && (
+              <EditIcon
+                style={{ marginRight: 8 }}
+                onClick={onEdit}
+                sx={{ cursor: "pointer" }}
+              />
+            )}
+            {showDelete && (
+              <DeleteIcon onClick={onDelete} sx={{ cursor: "pointer" }} />
+            )}
           </Stack>
         </Grid>
       </Grid>
     </Paper>
   );
-                <Grid item>
-                    <Stack direction="row" spacing={1}>
-                        {showEdit && <EditIcon style={{marginRight: 8}}/>}
-                        {showDelete && <DeleteIcon onClick={onDelete} />} {/* Use onDelete prop */}
-                    </Stack>
-                </Grid>
-            </Grid>
-        </Paper>
-    );
 };

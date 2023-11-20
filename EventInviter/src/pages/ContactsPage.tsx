@@ -113,6 +113,8 @@ export const ContactsPage = () => {
               telNumber={contact.telNumber}
               onEdit={() => editContact(contact)}
               onDelete={() => deleteContact(contact)}
+              showDelete={true}
+              showEdit={true}
             />
           ))}
         </Stack>
