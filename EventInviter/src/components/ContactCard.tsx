@@ -9,7 +9,8 @@ type ContactCardProps = {
   lastName: string;
   showTelNumber?: boolean;
   telNumber: string;
-  onClick?: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
 };
 
 export const ContactCard = ({
@@ -17,10 +18,11 @@ export const ContactCard = ({
   lastName,
   showTelNumber,
   telNumber,
-  onClick,
+  onEdit,
+  onDelete,
 }: ContactCardProps) => {
   return (
-    <Paper elevation={4} style={{ padding: 16 }} onClick={onClick}>
+    <Paper elevation={4} style={{ padding: 16 }}>
       <Grid
         container
         justifyContent="space-between"
@@ -38,8 +40,12 @@ export const ContactCard = ({
 
         <Grid item>
           <Stack direction="row" spacing={1}>
-            <EditIcon style={{ marginRight: 8 }} />
-            <DeleteIcon />
+            <EditIcon
+              style={{ marginRight: 8 }}
+              onClick={onEdit}
+              sx={{ cursor: "pointer" }}
+            />
+            <DeleteIcon onClick={onDelete} sx={{ cursor: "pointer" }} />
           </Stack>
         </Grid>
       </Grid>

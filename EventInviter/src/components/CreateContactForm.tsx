@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import { Contact } from "../types/contact";
 import { useAppDispatch } from "../store/hooks";
-import { add } from "../store/contactsSlice";
+import { add, edit } from "../store/contactsSlice";
 import { useState } from "react";
 
 type CreateContactFormProps = {
@@ -20,18 +20,28 @@ export default function CreateContactForm({
   const [telNumber, setTelNumber] = useState(contact.telNumber);
   const [email, setEmail] = useState(contact.email);
 
-  // const count = useSelector((state) => state.counter.value)
   const dispatch = useAppDispatch();
 
-  const handleSave = () => {
-    const newContact: Contact = {
-      id: Math.random(),
-      firstName,
-      lastName,
-      telNumber,
-      email,
-    };
-    dispatch(add(newContact));
+  const handleSave = (editingDialog: boolean) => {
+    if (editingDialog) {
+      const editedContact: Contact = {
+        id: contact.id,
+        firstName,
+        lastName,
+        telNumber,
+        email,
+      };
+      dispatch(edit(editedContact));
+    } else {
+      const newContact: Contact = {
+        id: Math.random(),
+        firstName,
+        lastName,
+        telNumber,
+        email,
+      };
+      dispatch(add(newContact));
+    }
     onClose();
   };
 
@@ -43,17 +53,12 @@ export default function CreateContactForm({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 300,
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    borderRadius: 1,
   };
 
   return (
     <Box sx={style} component="form" noValidate autoComplete="on">
       <div
         style={{
-          display: "flex",
           flexDirection: "column",
           gap: "12px",
           alignItems: "flex-start",
@@ -91,13 +96,16 @@ export default function CreateContactForm({
           />
         </div>
         <Paper
-          onClick={handleSave}
+          onClick={() => handleSave(contact.id !== 0)}
           sx={{ cursor: "pointer" }}
           elevation={3}
           style={{
             padding: "6px 16px",
+            textAlign: "center",
+            width: "fit-content",
             alignSelf: "flex-end",
-            margin: "12px 0px 16px",
+            margin: "24px 0px 16px 200px",
+            background: "#9e9e9e",
           }}
         >
           Save

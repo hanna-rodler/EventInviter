@@ -23,10 +23,15 @@ export const contactsSlice = createSlice({
       state.entities = state.entities.filter((e) => e.id !== action.payload.id);
       console.log(action);
     },
+    edit: (state, action) => {
+      const index = state.entities.findIndex((e) => e.id === action.payload.id);
+      state.entities[index] = action.payload;
+      console.log(action);
+    },
   },
 });
 
-export const { add, remove } = contactsSlice.actions;
+export const { add, remove, edit } = contactsSlice.actions;
 
 // Selectors
 export const selectContacts = (state: RootState) => state.contacts.entities;
