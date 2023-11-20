@@ -106,10 +106,8 @@ const DraggableCard = ({ contact }) => {
         item: { contact },
     });
 
-
-
     return (
-        <div ref={(node) => drag(node)} style={{ opacity: isDragging ? 0.5 : 1 }}>
+        <div ref={(node) => drag(node)} style={{ opacity: isDragging ? 0.8 : 1 }}>
             <ContactCard
                 key={contact.id}
                 firstName={contact.firstName}
@@ -123,7 +121,6 @@ const DraggableCard = ({ contact }) => {
     );
 };
 
-
 type Props = {
     events: Event[];
 };
@@ -131,7 +128,6 @@ type Props = {
 export const EventDetailPage = ({ events }: Props) => {
     events = EVENTS;
     let contacts = CONTACTS;
-
 
     const { id }: { id: string } = useParams();
     const [event, setEvent] = useState(events);
@@ -173,7 +169,7 @@ export const EventDetailPage = ({ events }: Props) => {
         accept: 'CONTACT',
         drop: (item) => handleDrop(item.contact),
         collect: (monitor) => ({
-            isOver: !!monitor.isOver(),
+            isOver: monitor.isOver(),
         }),
     });
 
@@ -250,7 +246,5 @@ export const EventDetailPage = ({ events }: Props) => {
             </Grid>
 
         </Fragment>
-
-
     )
 }
