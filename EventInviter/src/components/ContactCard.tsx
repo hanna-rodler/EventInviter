@@ -9,6 +9,8 @@ type ContactCardProps = {
   firstName: string;
   lastName: string;
   showTelNumber?: boolean;
+  telNumber: string;
+  onEdit?: () => void;
   telNumber?: string;
   onClick?: () => void;
   showEdit?: boolean;
@@ -22,12 +24,13 @@ export const ContactCard = ({
   lastName,
   showTelNumber,
   telNumber,
+  onEdit,
+  onDelete,
   onClick,
   showEdit,
   showDelete,
   draggable,
   onDelete
-
 }: ContactCardProps) => {
 
   const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
@@ -56,6 +59,19 @@ export const ContactCard = ({
           </Stack>
         </Grid>
 
+        <Grid item>
+          <Stack direction="row" spacing={1}>
+            <EditIcon
+              style={{ marginRight: 8 }}
+              onClick={onEdit}
+              sx={{ cursor: "pointer" }}
+            />
+            <DeleteIcon onClick={onDelete} sx={{ cursor: "pointer" }} />
+          </Stack>
+        </Grid>
+      </Grid>
+    </Paper>
+  );
                 <Grid item>
                     <Stack direction="row" spacing={1}>
                         {showEdit && <EditIcon style={{marginRight: 8}}/>}
