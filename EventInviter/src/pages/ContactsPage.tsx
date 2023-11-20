@@ -4,61 +4,15 @@ import { Contact } from "../types/contact";
 import Stack from "@mui/material/Stack";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { SearchBar } from "../components/SearchBar";
-import Modal from "@mui/material/Modal";
 import CreateContactForm from "../components/CreateContactForm";
 import Typography from "@mui/material/Typography";
+import { Dialog } from "@mui/material";
+import { useAppSelector } from "../store/hooks";
+import { selectContacts } from "../store/contactsSlice";
 
-const CONTACTS: Contact[] = [
-  {
-    id: 1,
-    firstName: "Hanna",
-    lastName: "Rodler",
-    telNumber: "+43 677 62675165",
-    email: "hannah@example.com",
-  },
-  {
-    id: 2,
-    firstName: "Tobias",
-    lastName: "Kothbauer",
-    telNumber: "+43 650 2109448",
-    email: "tobias@example.com",
-  },
-  {
-    id: 3,
-    firstName: "Elena",
-    lastName: "Ebetshuber",
-    telNumber: "+43 664 88440326",
-    email: "elena@example.com",
-  },
-  {
-    id: 4,
-    firstName: "Max",
-    lastName: "Mustermann",
-    telNumber: "+43 664 12345678",
-    email: "max@example.com",
-  },
-  {
-    id: 5,
-    firstName: "Maria",
-    lastName: "Musterfrau",
-    telNumber: "+43 664 87654321",
-    email: "maria@example.com",
-  },
-  {
-    id: 6,
-    firstName: "John",
-    lastName: "Doe",
-    telNumber: "+43 664 12345678",
-    email: "john@example.com",
-  },
-];
+export const ContactsPage = () => {
+  const contacts = useAppSelector(selectContacts);
 
-type ContactsPageProps = {
-  contacts: Contact[];
-};
-
-export const ContactsPage = ({ contacts }: ContactsPageProps) => {
-  contacts = CONTACTS;
   const [filteredContacts, setFilteredContacts] = useState(contacts);
   const [currentContact, setCurrentContact] = useState<Contact>({
     id: 0,
@@ -89,7 +43,7 @@ export const ContactsPage = ({ contacts }: ContactsPageProps) => {
   const handleClose = () => setOpen(false);
 
   const handleSearch = (searchTerm: string) => {
-    const filtered = contacts.filter(
+    const filtered = filteredContacts.filter(
       (contact) =>
         contact.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         contact.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -116,19 +70,19 @@ export const ContactsPage = ({ contacts }: ContactsPageProps) => {
           </Typography>
         </Stack>
 
-        <Modal
+        <Dialog
           open={openModal}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
           <CreateContactForm contact={currentContact} onClose={handleClose} />
-        </Modal>
+        </Dialog>
 
         <SearchBar onSearch={handleSearch} />
 
         <Stack direction="column" gap={1} flexWrap={"wrap"}>
-          {filteredContacts.map((contact) => (
+          {filteredContacts.map((contact: Contact) => (
             <ContactCard
               key={contact.id}
               firstName={contact.firstName}

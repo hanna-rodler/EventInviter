@@ -6,27 +6,25 @@ import { EventDetailPage } from "./pages/EventDetailPage";
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <AppBar position="static">
-          <Toolbar>
-            <Button color="inherit" component={NavLink} to="/">
-              Events
-            </Button>
-            <Button color="inherit" component={NavLink} to="/contacts">
-              Contacts
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <Container>
-          <Routes>
-            <Route path="/" element={<EventsPage />} />
-            <Route path="/contacts" element={<ContactsPage contacts={[]} />} />
-            <Route path="/events/:id" element={<EventDetailPage />} />
-          </Routes>
-        </Container>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <AppBar position="static">
+        <Toolbar>
+          <Button color="inherit" component={NavLink} to="/">
+            Events
+          </Button>
+          <Button color="inherit" component={NavLink} to="/contacts">
+            Contacts
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Container>
+        <Routes>
+          <Route path="/" element={<EventsPage />} />
+          <Route path="/contacts" element={<ContactsPage />} />
+          <Route path="/events/:id" element={<EventDetailPage />} />
+        </Routes>
+      </Container>
+    </BrowserRouter>
   );
 }
 

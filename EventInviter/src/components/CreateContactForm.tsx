@@ -2,6 +2,9 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import { Contact } from "../types/contact";
+import { useAppDispatch } from "../store/hooks";
+import { add } from "../store/contactsSlice";
+import { useState } from "react";
 
 type CreateContactFormProps = {
   contact: Contact;
@@ -12,8 +15,23 @@ export default function CreateContactForm({
   contact,
   onClose,
 }: CreateContactFormProps) {
+  const [firstName, setFirstName] = useState(contact.firstName);
+  const [lastName, setLastName] = useState(contact.lastName);
+  const [telNumber, setTelNumber] = useState(contact.telNumber);
+  const [email, setEmail] = useState(contact.email);
+
+  // const count = useSelector((state) => state.counter.value)
+  const dispatch = useAppDispatch();
+
   const handleSave = () => {
-    console.log("in handle save");
+    const newContact: Contact = {
+      id: Math.random(),
+      firstName,
+      lastName,
+      telNumber,
+      email,
+    };
+    dispatch(add(newContact));
     onClose();
   };
 
@@ -48,24 +66,28 @@ export default function CreateContactForm({
             id="first-name"
             label="First name"
             defaultValue={contact.firstName}
+            onChange={(e) => setFirstName(e.target.value)}
           />
           <TextField
             size="small"
             id="last-name"
             label="Last name"
             defaultValue={contact.lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
           <TextField
             size="small"
             id="tel-numer"
             label="Telephone number"
             defaultValue={contact.telNumber}
+            onChange={(e) => setTelNumber(e.target.value)}
           />
           <TextField
             size="small"
             id="email"
             label="Email"
             defaultValue={contact.email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <Paper
