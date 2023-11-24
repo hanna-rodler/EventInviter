@@ -10,52 +10,8 @@ import { Contact } from "../types/contact";
 import { useDrag, useDrop } from "react-dnd";
 import { useAppSelector } from "../store/hooks";
 import { selectContacts } from "../store/contactsSlice";
-
-const EVENTS: Event[] = [
-  {
-    id: 1,
-    name: "Weihnachtsfeier",
-    date: "28.12.2023",
-    time: "18:00",
-    location: "Linz",
-    description: "Gemütliche Weihnachtsfeier mit Punsch und Keksen",
-    isInvitesSent: false,
-    invitees: [
-      {
-        id: 1,
-        firstName: "Hanna",
-        lastName: "Rodler",
-        telNumber: "+43 677 62675165",
-        email: "hannah@example.com",
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "FKF - Das Kalenderfest",
-    date: "02.12.2023",
-    time: "20:00",
-    location: "Hagenberg",
-    description: "Super duper party!",
-    isInvitesSent: true,
-    invitees: [
-      {
-        id: 2,
-        firstName: "Tobias",
-        lastName: "Kothbauer",
-        telNumber: "+43 650 2109448",
-        email: "tobias@example.com",
-      },
-      {
-        id: 3,
-        firstName: "Elena",
-        lastName: "Ebetshuber",
-        telNumber: "+43 664 88440326",
-        email: "elena@example.com",
-      },
-    ],
-  },
-];
+import {useSelector} from "react-redux";
+import {RootState} from "../store/store";
 
 const DraggableCard = ({ contact }) => {
   const [{ isDragging }, drag] = useDrag({
@@ -78,20 +34,18 @@ const DraggableCard = ({ contact }) => {
   );
 };
 
-type Props = {
-  events: Event[];
-};
-
-export const EventDetailPage = ({ events }: Props) => {
-  events = EVENTS;
+export const EventDetailPage = () => {
+  // events = EVENTS;
   const contacts = useAppSelector(selectContacts);
+  const events: Event[] = useSelector((state: RootState) => state.events.entities)
 
-  const { id }: { id: string } = useParams();
+  const { id } = useParams() as {id: string};
+  const numericId: number = parseInt(id, 10);
   const [event, setEvent] = useState(events);
   const isInvitesSent = event[0]?.isInvitesSent || false;
 
   useEffect(() => {
-    const selectedEvent = events.find((e) => e.id == id);
+    const selectedEvent = events.find((e) => e.id === numericId);
 
     if (selectedEvent) setEvent([selectedEvent]);
   }, [id]);
@@ -115,7 +69,7 @@ export const EventDetailPage = ({ events }: Props) => {
     }
   };
 
-  const handleDelete = (contactId) => {
+  const handleDelete = (contactId: number) => {
     const updatedEvent = {
       ...event[0],
       invitees: event[0].invitees.filter((invitee) => invitee.id !== contactId),

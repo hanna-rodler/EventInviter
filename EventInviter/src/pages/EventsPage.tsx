@@ -1,11 +1,17 @@
 import {EventCard} from "../components/EventCard";
 import Stack from '@mui/material/Stack';
+import type { RootState } from '../store/store';
 import {Fragment} from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Typography from "@mui/material/Typography";
 import { SearchBar } from "../components/SearchBar";
+import {Event} from "../types/events";
+import {useSelector} from "react-redux";
 
 export const EventsPage = () => {
+    const events: Event[] = useSelector((state: RootState) => state.events.entities)
+    // const dispatch = useDispatch()
+
     return (
         <Fragment>
             <div>
@@ -25,11 +31,9 @@ export const EventsPage = () => {
                     <SearchBar onSearch={handleSearch} />
                 </Stack>
                 <Stack direction="row" spacing={3} useFlexGap flexWrap="wrap">
-                    <EventCard></EventCard>
-                    <EventCard></EventCard>
-                    <EventCard></EventCard>
-                    <EventCard></EventCard>
-                    <EventCard></EventCard>
+                    {events.map(event => (
+                            <EventCard key={event.id} event={event}></EventCard>
+                    ))}
                 </Stack>
             </div>
             <div>

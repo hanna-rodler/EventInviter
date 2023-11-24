@@ -3,30 +3,33 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import {Link} from "react-router-dom";
+import { Event } from "../types/events";
 
-export const EventCard = () => {
+interface EventCardProps {
+    event: Event;
+}
+
+export const EventCard: React.FC<EventCardProps> = ({ event }) => {
     return (
-        <Card sx={{ minWidth: 250, maxWidth: 300, display: 'block'}}>
+        <Card sx={{ minWidth: 275, maxWidth: 275, display: 'block'}}>
             <CardContent>
                 <Typography variant="h5" component="div">
-                    Event Name
+                    {event.name}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    MM.DD.YY, HH:MM am
+                    {event.date}, {event.time}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary" gutterBottom>
-                    invited: 8
+                    invited: {event.invitees.length}
                 </Typography>
                 <Typography variant="body2">
-                    Event description if wanted.
-                    <br />
-                    yay, this is so fun, come to my event
+                    {event.description}
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small">Details</Button>
+                <Link style={{marginLeft: 6}} to={`/events/${event.id}`}><Button style={{paddingLeft: 0}} size="small">Details</Button></Link>
             </CardActions>
-
         </Card>
     );
 }
