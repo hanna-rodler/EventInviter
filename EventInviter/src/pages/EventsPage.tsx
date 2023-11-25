@@ -41,7 +41,7 @@ export const EventsPage = () => {
                             sx={{ cursor: "pointer" }}
                             style={{ background: "none", borderWidth: "1px" }}
                         >
-                            Create Contact
+                            Create Event
                         </Typography>
                     </div>
                     <SearchBar onSearch={handleSearch} />
