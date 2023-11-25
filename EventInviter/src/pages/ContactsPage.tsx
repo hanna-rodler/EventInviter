@@ -94,7 +94,7 @@ export const ContactsPage = () => {
           fullWidth
           PaperProps={{
             style: {
-              height: "40%",
+              height: "60%",
             },
           }}
         >
