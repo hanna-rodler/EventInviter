@@ -10,8 +10,8 @@ import { Contact } from "../types/contact";
 import { useDrag, useDrop } from "react-dnd";
 import { useAppSelector } from "../store/hooks";
 import { selectContacts } from "../store/contactsSlice";
-import {useSelector} from "react-redux";
-import {RootState} from "../store/store";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 const DraggableCard = ({ contact }) => {
   const [{ isDragging }, drag] = useDrag({
@@ -37,9 +37,11 @@ const DraggableCard = ({ contact }) => {
 export const EventDetailPage = () => {
   // events = EVENTS;
   const contacts = useAppSelector(selectContacts);
-  const events: Event[] = useSelector((state: RootState) => state.events.entities)
+  const events: Event[] = useSelector(
+    (state: RootState) => state.events.entities
+  );
 
-  const { id } = useParams() as {id: string};
+  const { id } = useParams() as { id: string };
   const numericId: number = parseInt(id, 10);
   const [event, setEvent] = useState(events);
   const isInvitesSent = event[0]?.isInvitesSent || false;
@@ -76,6 +78,18 @@ export const EventDetailPage = () => {
     };
 
     setEvent([updatedEvent]);
+  };
+
+  const handleSendInvites = () => {
+    const currEvent = {
+      ...event[0],
+    };
+
+    currEvent.invitees.forEach((invitee) => {
+      const invitationText = `Dear ${invitee.firstName} ${invitee.lastName}! You are invited to the event "${currEvent.name}" on ${currEvent.date} at ${currEvent.time}. "${currEvent.description}"`;
+      const link = `https://api.whatsapp.com/send?phone=${invitee.telNumber}&text=${invitationText}`;
+      window.open(link, "_blank");
+    });
   };
 
   const [{ isOver }, drop] = useDrop({
@@ -139,7 +153,14 @@ export const EventDetailPage = () => {
             <p>Drag & Drop New Invitees</p>
           </Box>
 
-          <Stack direction="row" alignItems="center" spacing={1} mt={5}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            spacing={1}
+            mt={5}
+            onClick={handleSendInvites}
+            sx={{ cursor: "pointer" }}
+          >
             <SendIcon />
             <p>SEND INVITES</p>
           </Stack>
