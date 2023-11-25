@@ -84,7 +84,7 @@ export const ContactsPage = () => {
             style={{ background: "none", borderWidth: "1px" }}
             onClick={openDialog}
           >
-            Create Contact
+            Add Contact
           </Typography>
         </Stack>
 
@@ -94,7 +94,7 @@ export const ContactsPage = () => {
           fullWidth
           PaperProps={{
             style: {
-              height: "40%",
+              height: "60%",
             },
           }}
         >
