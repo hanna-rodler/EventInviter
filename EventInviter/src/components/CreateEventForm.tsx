@@ -33,7 +33,7 @@ export const CreateEventForm = ({onClose}: CreateEventFormProps) => {
             id: Math.floor((Math.random())*10),
             name: data.name,
             date: data.date,
-            time: '20:00',
+            time: data.time,
             location: data.location,
             description: data.description,
             isInvitesSent: false,
@@ -100,18 +100,22 @@ export const CreateEventForm = ({onClose}: CreateEventFormProps) => {
                                 size="small"
                                 id="date"
                                 label="Date"
-                                {...register("date", {required: true})}
+                                placeholder="dd.mm.yyyy"
+                                {...register("date", {required: true, pattern: /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}(?:\s*-\s*(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4})?$/})}
                             />
-                            {errors.date && <Typography style={{ color: 'red', marginTop: 3 }}>This field is required</Typography>}
+                            {errors.date?.type === 'required' && <Typography style={{ color: 'red', marginTop: 3 }}>This field is required</Typography>}
+                            {errors.date?.type === 'pattern' && <Typography style={{ color: 'red', marginTop: 3 }}>Please provide the date in the format dd.mm.yyyy or dd.mm.yyyy - dd.mm.yyyy</Typography>}
                         </div>
                         <div style={{ display: "flex", flexDirection: "column"}}>
                             <TextField
                                 size="small"
                                 id="time"
                                 label="Time"
-                                {...register("time", {required: true})}
+                                placeholder="hh:mm or hh:mm-hh:mm"
+                                {...register("time", {required: true, pattern: /^(?:\d{1,2}:\d{2}(?:\s*-\s*\d{1,2}:\d{2})?)$/ })}
                             />
-                            {errors.time && <Typography style={{ color: 'red', marginTop: 3 }}>This field is required</Typography>}
+                            {errors.time?.type === 'required' && <Typography style={{ color: 'red', marginTop: 3 }}>This field is required</Typography>}
+                            {errors.time?.type === 'pattern' && <Typography style={{ color: 'red', marginTop: 3 }}>Please provide the time in the pattern hh:mm or hh:mm-hh:mm</Typography>}
                         </div>
                     </div>
                     <Paper

@@ -17,7 +17,7 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
   };
 
   return (
-    <Stack direction={"row"} alignItems={"center"} gap={1} paddingBottom={2}>
+    <Stack direction={"row"} alignItems={"center"} gap={1}>
       <SearchIcon></SearchIcon>
       <TextField
         variant="outlined"

@@ -4,11 +4,13 @@ import { Contact } from "../types/contact";
 import Stack from "@mui/material/Stack";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { SearchBar } from "../components/SearchBar";
+import Box from "@mui/material/Box";
 import CreateContactForm from "../components/CreateContactForm";
 import Typography from "@mui/material/Typography";
-import { Dialog } from "@mui/material";
+import {Dialog} from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { remove, selectContacts } from "../store/contactsSlice";
+import Button from "@mui/material/Button";
 
 export const ContactsPage = () => {
   const contacts = useAppSelector(selectContacts);
@@ -75,17 +77,10 @@ export const ContactsPage = () => {
     <Fragment>
       <div style={{ padding: 16 }}>
         <Stack direction="row" gap={1} paddingBottom={2} alignItems={"center"}>
-          <AddCircleIcon
-            sx={{ cursor: "pointer" }}
-            onClick={openDialog}
-          ></AddCircleIcon>
-          <Typography
-            sx={{ cursor: "pointer" }}
-            style={{ background: "none", borderWidth: "1px" }}
-            onClick={openDialog}
-          >
+          <Button startIcon={<AddCircleIcon />} onClick={openDialog} // Toggle the filterOn state
+                  variant='outlined' >
             Create Contact
-          </Typography>
+          </Button>
         </Stack>
 
         <Dialog
@@ -101,7 +96,9 @@ export const ContactsPage = () => {
           <CreateContactForm contact={currentContact} onClose={handleClose} />
         </Dialog>
 
-        <SearchBar onSearch={handleSearch} />
+        <Box sx={{mb: 4}}>
+          <SearchBar onSearch={handleSearch}/>
+        </Box>
 
         <Stack direction="column" gap={1} flexWrap={"wrap"}>
           {contacts.map((contact: Contact) => (
