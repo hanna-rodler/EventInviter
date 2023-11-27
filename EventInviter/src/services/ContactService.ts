@@ -5,7 +5,7 @@ const CONTACTS: Contact[] = [
     id: 1,
     firstName: "Hanna",
     lastName: "Rodler",
-    telNumber: "+43 677 62675165",
+    telNumber: "+43 680 45576284",
     email: "hannah@example.com",
   },
   {
