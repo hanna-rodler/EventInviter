@@ -3,7 +3,6 @@ import Stack from '@mui/material/Stack';
 import type { RootState } from '../store/store';
 import {Fragment, useState} from "react";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { SearchBar } from "../components/SearchBar";
 import {Event} from "../types/events";
 import {useSelector} from "react-redux";
 import { CreateEventForm } from "../components/CreateEventForm";
@@ -29,12 +28,6 @@ export const EventsPage = () => {
         setOpen(false);
     };
 
-    const handleSearch = (searchTerm: string) => {
-        console.log(searchTerm);
-        let filtered = events.filter(event => event.name.includes(searchTerm));
-        console.log('filtered', filtered);
-    };
-
     return (
         <Fragment>
             <div>
@@ -47,7 +40,6 @@ export const EventsPage = () => {
                             Create Event
                         </Button>
                     </div>
-                    <SearchBar onSearch={handleSearch} />
                     <div>
                         <Button startIcon={<FilterAltIcon />} onClick={() => {setFilterOn(!filterOn); dispatch(filterInvitationsNeeded(filterOn))}} // Toggle the filterOn state
                                 variant={filterOn ? 'contained' : 'outlined'} // Use 'contained' if filterOn is true, 'outlined' otherwise

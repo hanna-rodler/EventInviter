@@ -3,11 +3,11 @@ import { Event } from "../types/events";
 const EVENTS: Event[] = [
     {
         id: 1,
-        name: "Weihnachtsfeier",
+        name: "Christmas party",
         date: "28.12.2023",
         time: "18:00",
         location: "Linz",
-        description: "Gemütliche Weihnachtsfeier mit Punsch und Keksen",
+        description: "Cozy Christmas party with punch and cookies",
         isInvitesSent: false,
         invitees: [
             {
@@ -21,11 +21,11 @@ const EVENTS: Event[] = [
     },
     {
         id: 2,
-        name: "FKF - Das Kalenderfest",
+        name: "Eventcalender Festival",
         date: "02.12.2023",
         time: "20:00",
         location: "Hagenberg",
-        description: "Super duper party!",
+        description: "Super duper party to celebrate the success of the EventInviter App!",
         isInvitesSent: true,
         invitees: [
             {

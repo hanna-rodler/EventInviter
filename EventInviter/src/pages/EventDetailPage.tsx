@@ -28,7 +28,7 @@ const DraggableCard = ({ contact }) => {
         showTelNumber={false}
         showEdit={false}
         showDelete={false}
-      />
+        telNumber={contact.telNumber}/>
     </div>
   );
 };
@@ -129,7 +129,7 @@ export const EventDetailPage = () => {
                 showDelete={true}
                 draggable={true}
                 onDelete={() => handleDelete(invitee.id)}
-              />
+                telNumber={invitee.telNumber}/>
             ))}
           </Stack>
 
