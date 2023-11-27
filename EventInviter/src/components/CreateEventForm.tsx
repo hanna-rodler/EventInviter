@@ -130,6 +130,7 @@ export const CreateEventForm = ({onClose}: CreateEventFormProps) => {
                             margin: "24px 0px 16px 200px",
                             background: "#9e9e9e",
                         }}
+                        id="save-event"
                     >
                         Save
                     </Paper>

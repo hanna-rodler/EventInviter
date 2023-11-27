@@ -42,7 +42,7 @@ export const EventsPage = () => {
                 {/*<Stack direction="row" gap={1} paddingBottom={2} alignItems="center" justifyContent="flex-start" spacing={{ xs: 2, sm: 3, md: 4 }} useFlexGap flexWrap="wrap">*/}
                 <Stack direction="row" gap={3} marginBottom={4} flexWrap="wrap">
                     <div>
-                        <Button startIcon={<AddCircleIcon />} onClick={createEventForm} // Toggle the filterOn state
+                        <Button id="create-event" startIcon={<AddCircleIcon />} onClick={createEventForm} // Toggle the filterOn state
                                 variant='outlined' >
                             Create Event
                         </Button>

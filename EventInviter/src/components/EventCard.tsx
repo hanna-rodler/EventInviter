@@ -14,7 +14,7 @@ export const EventCard: React.FC<EventCardProps> = ({ event }) => {
     return (
         <Card sx={{ minWidth: 275, maxWidth: 275, display: 'block'}}>
             <CardContent>
-                <Typography variant="h5" component="div">
+                <Typography data-testid={event.name} variant="h5" component="div">
                     {event.name}
                 </Typography>
                 <Typography sx={{ mb: 1.5 }} color="text.secondary">

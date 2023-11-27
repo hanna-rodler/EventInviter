@@ -6,7 +6,6 @@ import { Box, Grid, Stack } from "@mui/material";
 import { Event } from "../types/events";
 import { ContactCard } from "../components/ContactCard";
 import { Fragment, useEffect, useState } from "react";
-import { Contact } from "../types/contact";
 import { useDrag, useDrop } from "react-dnd";
 import { useAppSelector } from "../store/hooks";
 import { selectContacts } from "../store/contactsSlice";
@@ -35,7 +34,6 @@ const DraggableCard = ({ contact }) => {
 };
 
 export const EventDetailPage = () => {
-  // events = EVENTS;
   const contacts = useAppSelector(selectContacts);
   const events: Event[] = useSelector(
     (state: RootState) => state.events.entities
@@ -137,6 +135,7 @@ export const EventDetailPage = () => {
 
           <Box
             ref={drop}
+            data-testid="drop-area"
             sx={{
               borderStyle: "dashed",
               borderRadius: 1,
