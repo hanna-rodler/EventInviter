@@ -112,7 +112,7 @@ export const CreateEventForm = ({onClose}: CreateEventFormProps) => {
                                 id="time"
                                 label="Time"
                                 placeholder="hh:mm or hh:mm-hh:mm"
-                                {...register("time", {required: true, pattern: /^(?:\d{1,2}:\d{2}(?:\s*-\s*\d{1,2}:\d{2})?)$/ })}
+                                {...register("time", {required: true, pattern: /^(2[0-3]|[01]?[0-9]):([0-5]?[0-9])(?:\s*-\s*(2[0-3]|[01]?[0-9]):([0-5]?[0-9]))?$/ })}
                             />
                             {errors.time?.type === 'required' && <Typography style={{ color: 'red', marginTop: 3 }}>This field is required</Typography>}
                             {errors.time?.type === 'pattern' && <Typography style={{ color: 'red', marginTop: 3 }}>Please provide the time in the pattern hh:mm or hh:mm-hh:mm</Typography>}
