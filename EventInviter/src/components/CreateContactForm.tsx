@@ -139,7 +139,7 @@ export default function CreateContactForm({
           />
           <TextField
             size="small"
-            id="tel-numer"
+            id="tel-number"
             label="Telephone number"
             defaultValue={contact.telNumber}
             onChange={handleTelNumber}
@@ -177,6 +177,7 @@ export default function CreateContactForm({
             margin: "24px 0px 16px 200px",
             background: "#9e9e9e",
           }}
+          id="save-contact-button"
         >
           Save
         </Button>

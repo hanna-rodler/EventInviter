@@ -83,6 +83,7 @@ export const ContactsPage = () => {
             sx={{ cursor: "pointer" }}
             style={{ background: "none", borderWidth: "1px" }}
             onClick={openDialog}
+            id="add-contact-button"
           >
             Add Contact
           </Typography>
