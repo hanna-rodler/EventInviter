@@ -28,4 +28,8 @@ We tried to implement a DatePicker for the Create Events Form.
 We wrapped it in a Controller like recommended in the docs, added the LocalizationProvider with the dateAdapter, etc.
 We tried the later with date-fns and dayjs - both should be fine according to the docs. All the dependencies were installed and all the necessary attributes set for the DatePicker.
 What didn't work was registering the DatePicker wrapped in the LocalizationProvider and the Controller in connection with react-hook-form. For whatever reason, when we tried to use the MUI DatePicker with react-hook-form and redux, the DatePicker only output dd/EEEE/yyyy.
-After 2 hours of trying to debug this peculiar behavior, we removed the DatePicker and all the dependencies again and added a TextField with a proper pattern. We know this could be improved, but since it exceeded the approximate time that was set by the professor, we decided to change this.     
+After 2 hours of trying to debug this peculiar behavior, we removed the DatePicker and all the dependencies again and added a TextField with a proper pattern. We know this could be improved, but since it exceeded the approximate time that was set by the professor, we decided to change this.    
+
+_Drag&Drop Contact to Event_:
+We implemented a Drag&Drop feature at the beginning of the project and it work's fine. The Contact is added to the event and you havv the possibility to delete it again. Additionaly there is the feature, that you can not add the same Contact twice.
+At this time, we didn't use Redux yet. Some time after we implemented Redux we found out, that if we switch pages after the drag&drop action, the Contact is not saved. After some time trying to fix this we decided to leave it as it is, because we showed that we can use Redux for example after creating an Event or an Contact.
