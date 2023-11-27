@@ -30,17 +30,12 @@ export const ContactCard = ({
   showDelete,
   draggable,
 }: ContactCardProps) => {
-  const handleDragStart = (event: React.DragEvent<HTMLDivElement>) => {
-    console.log(event.dataTransfer.getData("text/plain"));
-  };
-
   return (
     <Paper
       elevation={4}
       style={{ padding: 16, cursor: draggable ? "move" : "default" }}
       onClick={onClick}
       draggable={draggable}
-      onDragStart={handleDragStart}
     >
       <Grid
         container

@@ -6,7 +6,6 @@ import { Box, Grid, Stack } from "@mui/material";
 import { Event } from "../types/events";
 import { ContactCard } from "../components/ContactCard";
 import { Fragment, useEffect, useState } from "react";
-import { Contact } from "../types/contact";
 import { useDrag, useDrop } from "react-dnd";
 import { useAppSelector } from "../store/hooks";
 import { selectContacts } from "../store/contactsSlice";
@@ -29,7 +28,7 @@ const DraggableCard = ({ contact }) => {
         showTelNumber={false}
         showEdit={false}
         showDelete={false}
-      />
+        telNumber={contact.telNumber}/>
     </div>
   );
 };
@@ -131,7 +130,7 @@ export const EventDetailPage = () => {
                 showDelete={true}
                 draggable={true}
                 onDelete={() => handleDelete(invitee.id)}
-              />
+                telNumber={invitee.telNumber}/>
             ))}
           </Stack>
 
