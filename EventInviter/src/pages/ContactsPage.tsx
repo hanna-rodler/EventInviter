@@ -78,7 +78,7 @@ export const ContactsPage = () => {
       <div style={{ padding: 16 }}>
         <Stack direction="row" gap={1} paddingBottom={2} alignItems={"center"}>
           <Button startIcon={<AddCircleIcon />} onClick={openDialog} // Toggle the filterOn state
-                  variant='outlined' >
+                  variant='outlined' id="add-contact-button">
             Create Contact
           </Button>
         </Stack>
@@ -89,7 +89,7 @@ export const ContactsPage = () => {
           fullWidth
           PaperProps={{
             style: {
-              height: "40%",
+              height: "60%",
             },
           }}
         >
