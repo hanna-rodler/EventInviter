@@ -45,10 +45,10 @@ export const ContactCard = ({
       >
         <Grid item>
           <Stack direction="column" spacing={1}>
-            <label style={{ cursor: draggable ? "move" : "default" }}>
+            <label id={`${firstName}${lastName}`} data-testid="test-name" style={{ cursor: draggable ? "move" : "default" }}>
               {firstName} {lastName}
             </label>
-            {showTelNumber && <label>{telNumber}</label>}
+            {showTelNumber && <label id={telNumber}>{telNumber}</label>}
           </Stack>
         </Grid>
 

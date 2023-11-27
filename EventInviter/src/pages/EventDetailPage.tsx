@@ -34,7 +34,6 @@ const DraggableCard = ({ contact }) => {
 };
 
 export const EventDetailPage = () => {
-  // events = EVENTS;
   const contacts = useAppSelector(selectContacts);
   const events: Event[] = useSelector(
     (state: RootState) => state.events.entities
@@ -136,6 +135,7 @@ export const EventDetailPage = () => {
 
           <Box
             ref={drop}
+            data-testid="drop-area"
             sx={{
               borderStyle: "dashed",
               borderRadius: 1,
