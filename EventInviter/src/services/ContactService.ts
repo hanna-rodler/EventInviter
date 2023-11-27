@@ -12,14 +12,14 @@ const CONTACTS: Contact[] = [
     id: 2,
     firstName: "Tobias",
     lastName: "Kothbauer",
-    telNumber: "436502109448",
+    telNumber: "436502109449",
     email: "tobias@example.com",
   },
   {
     id: 3,
     firstName: "Elena",
     lastName: "Ebetshuber",
-    telNumber: "4366488440326",
+    telNumber: "4366488440327",
     email: "elena@example.com",
   },
   {
