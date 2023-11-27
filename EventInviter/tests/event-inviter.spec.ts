@@ -7,6 +7,14 @@ const testData = {
   email: 'a.test@example.com',
 };
 
+const testDataEvent = {
+  name: "Test Event",
+  date: "01.01.2022",
+  location: "Hagenberg",
+  time: "12:00",
+  description: "This is a description",
+};
+
 test.beforeEach(async ({ page }) => {
   await page.goto('http://localhost:5173');
 });
@@ -14,34 +22,34 @@ test.beforeEach(async ({ page }) => {
 test('Successfully create a new event', async ({ page }) => {
   await page.getByText("Create Event").click();
 
-  const testData = {
-    name: "Test Event",
-    date: "01.01.2022",
-    location: "Hagenberg",
-    time: "12:00",
-    description: "This is a description",
-  };
-
-  await page.fill('#name', testData.name);
-  await page.fill('#location', testData.location);
-  await page.fill('#description', testData.description);
-  await page.fill('#date', testData.date);
-  await page.fill('#time', testData.time);
+  await page.fill('#name', testDataEvent.name);
+  await page.fill('#location', testDataEvent.location);
+  await page.fill('#description', testDataEvent.description);
+  await page.fill('#date', testDataEvent.date);
+  await page.fill('#time', testDataEvent.time);
 
   await page.getByText("Save").click();
 
   await page.waitForSelector('#create-event');
 
-  const nameLabelText = await page.getByTestId(`${testData.name}`).innerHTML();
+  const nameLabelText = await page.getByTestId(`${testDataEvent.name}`).innerHTML();
 
-  expect(nameLabelText).toBe(testData.name);
+  expect(nameLabelText).toBe(testDataEvent.name);
+});
+
+
+test('Test filter when invitations have been sent', async ({ page }) => {
+  await expect(page.getByText("Eventcalender Festival")).toBeVisible();
+
+  await page.getByText("Invitations not sent yet").click();
+
+  await expect(page.getByText("Eventcalender Festival")).not.toBeVisible();
 });
 
 test('Successfully create a new contact', async ({ page }) => {
   let contactElement = page.locator('a[href="/contacts"]')
   await contactElement.click()
   await page.click('#add-contact-button');
-
 
   await page.fill('#first-name', testData.firstName);
   await page.fill('#last-name', testData.lastName);
