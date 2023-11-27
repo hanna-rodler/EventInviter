@@ -8,10 +8,12 @@ import { ContactCard } from "../components/ContactCard";
 import { Fragment, useEffect, useState } from "react";
 import { Contact } from "../types/contact";
 import { useDrag, useDrop } from "react-dnd";
-import { useAppSelector } from "../store/hooks";
-import { selectContacts } from "../store/contactsSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { remove, selectContacts } from "../store/contactsSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { add, addInvitee, selectEvents } from "../store/eventsSlice";
+import { AddContactToEvent } from "../types/addContactToEventDTO";
 
 const DraggableCard = ({ contact }) => {
   const [{ isDragging }, drag] = useDrag({
@@ -35,11 +37,19 @@ const DraggableCard = ({ contact }) => {
 };
 
 export const EventDetailPage = () => {
-  // events = EVENTS;
+  const dispatch = useAppDispatch();
   const contacts = useAppSelector(selectContacts);
-  const events: Event[] = useSelector(
-    (state: RootState) => state.events.entities
-  );
+  const events = useAppSelector(selectEvents);
+  const [selectedEvent, setSelectedEvent] = useState<Event>({
+    id: 0,
+    name: "",
+    date: "",
+    time: "",
+    location: "",
+    description: "",
+    isInvitesSent: false,
+    invitees: [],
+  });
 
   const { id } = useParams() as { id: string };
   const numericId: number = parseInt(id, 10);
@@ -49,26 +59,47 @@ export const EventDetailPage = () => {
   useEffect(() => {
     const selectedEvent = events.find((e) => e.id === numericId);
 
-    if (selectedEvent) setEvent([selectedEvent]);
+    if (selectedEvent) {
+      setEvent([selectedEvent]);
+      setSelectedEvent(selectedEvent);
+    }
   }, [id]);
 
   const handleDrop = (droppedContact) => {
-    const isContactAlreadyAdded = event[0].invitees.some(
-      (invitee) => invitee.id === droppedContact.id
-    );
+    // const isContactAlreadyAdded = event[0].invitees.some(
+    //   (invitee) => invitee.id === droppedContact.id
+    // );
 
-    if (!isContactAlreadyAdded) {
-      const updatedEvent = {
-        ...event[0],
-        invitees: [...event[0].invitees, droppedContact],
-      };
+    // if (!isContactAlreadyAdded) {
+    //   const updatedEvent = {
+    //     ...event[0],
+    //     invitees: [...event[0].invitees, droppedContact],
+    //   };
 
-      setEvent([updatedEvent]);
-    } else {
-      alert(
-        `Contact with ID ${droppedContact.id} is already added to the event.`
-      );
-    }
+    //   setEvent([updatedEvent]);
+    //   setSelectedEvent(updatedEvent);
+    // } else {
+    //   alert(
+    //     `Contact with ID ${droppedContact.id} is already added to the event.`
+    //   );
+    // }
+
+    const updatedEvent = {
+      ...event[0],
+      invitees: [...event[0].invitees, droppedContact],
+    };
+
+    setEvent([updatedEvent]);
+    setSelectedEvent(updatedEvent);
+
+    const newContactToEvent: AddContactToEvent = {
+      contact: droppedContact,
+      event: selectedEvent,
+    };
+
+    console.log(newContactToEvent);
+
+    dispatch(addInvitee(newContactToEvent));
   };
 
   const handleDelete = (contactId: number) => {
